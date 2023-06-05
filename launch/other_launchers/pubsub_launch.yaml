@@ -1,0 +1,12 @@
+launch:
+
+- node:
+  pkg: "orion_pkg"
+  exec: "publisher.py"
+  name: "talker"
+
+- node:
+  pkg: "orion_pkg"
+  exec: "subscriber.py"
+  name: "listener"
+
