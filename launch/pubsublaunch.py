@@ -25,5 +25,11 @@ def generate_launch_description():
             name='Joy_sub',
             output= 'screen'
         ),
+        Node(
+            package='orion_pkg',
+            executable='cam_activate.py',
+            name='Cam_Sub',
+            output= 'screen'
+        ),
     ])
 

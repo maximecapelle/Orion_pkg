@@ -20,6 +20,7 @@ install(PROGRAMS
   scripts/joystick/joystick_commands.py
   scripts/joystick/inputs.py
   scripts/Joystick_sub.py
+  scripts/cam_activate.py
   DESTINATION lib/${PROJECT_NAME}
 )
 # uncomment the following section in order to fill in
