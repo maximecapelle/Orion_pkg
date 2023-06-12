@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="orion_pkg" exec="publisher.py">
-</launch>

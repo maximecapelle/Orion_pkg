@@ -62,7 +62,7 @@ fi
 # Run docker container
 docker run \
     -it \
-    --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws \
+    --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws/src \
     -v ~/ExoMy_Software:/root/exomy_ws/src/exomy \
     -p 8000:8000 \
     -p 8080:8080 \
