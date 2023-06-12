@@ -2,9 +2,9 @@
 if [[ $1 == "config" ]]
 then
 	cd /WS/orion_ws/
-	colcon build
-	source install/setup.bash
-	ros2 launch orion_pkg pubsublaunch.py
+	# colcon build
+	# source install/setup.bash
+	# ros2 launch orion_pkg pubsublaunch.py
 	bash
 fi
 

@@ -22,7 +22,75 @@ from rclpy.node import Node
 
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Header
-from scripts.joystick.inputs import devices, UnpluggedError
+from inputs import devices, UnpluggedError
+
+# Microsoft X-Box 360 pad
+XINPUT_CODE_MAP = {
+    'ABS_X': 0,
+    'ABS_Y': 1,
+    'ABS_Z': 2,
+    'ABS_RX': 3,
+    'ABS_RY': 4,
+    'ABS_RZ': 5,
+    'ABS_HAT0X': 6,
+    'ABS_HAT0Y': 7,
+    'BTN_SOUTH': 0,
+    'BTN_EAST': 1,
+    'BTN_WEST': 2,
+    'BTN_NORTH': 3,
+    'BTN_TL': 4,
+    'BTN_TR': 5,
+    'BTN_START': 6,
+    'BTN_SELECT': 7,
+    'BTN_MODE': 8,
+    'BTN_THUMBL': 9,
+    'BTN_THUMBR':10
+}
+
+XINPUT_VALUE_MAP = {
+    0: (-32768, 32767),
+    1: (32767, -32768),
+    2: (0, 255),
+    3: (-32768, 32767),
+    4: (32767, -32768),
+    5: (0, 255),
+    6: (-1, 1),
+    7: (-1, 1)
+}
+
+# Sony Computer Entertainment Wireless Controller
+PS4_CODE_MAP = {
+    'ABS_X': 0,
+    'ABS_Y': 1,
+    'ABS_RX': 2,
+    'ABS_Z': 3,
+    'ABS_RZ': 4,
+    'ABS_RY': 5,
+    'ABS_HAT0X': 6,
+    'ABS_HAT0Y': 7,
+    'BTN_EAST': 0,
+    'BTN_C': 1,
+    'BTN_SOUTH': 2,
+    'BTN_NORTH': 3,
+    'BTN_WEST': 4,
+    'BTN_Z': 5,
+    'BTN_TL2': 6,
+    'BTN_TR2': 7,
+    'BTN_MODE': 8,
+    'BTN_SELECT': 9,
+    'BTN_START':10
+}
+
+PS4_VALUE_MAP = {
+    0: (0, 255),
+    1: (0, 255),
+    2: (0, 255),
+    3: (0, 255),
+    4: (0, 255),
+    5: (0, 255),
+    6: (-1, 1),
+    7: (-1, 1)
+}
 
 # Logitech Gamepad F710
 F710_CODE_MAP = {
@@ -58,15 +126,52 @@ F710_VALUE_MAP = {
     7: (-1, 1)
 }
 
+# Microsoft X-Box One pad
+XONE_CODE_MAP = {
+    'ABS_X': 0,
+    'ABS_Y': 1,
+    'ABS_Z': 2,
+    'ABS_RX': 3,
+    'ABS_RY': 4,
+    'ABS_RZ': 5,
+    'ABS_HAT0X': 6,
+    'ABS_HAT0Y': 7,
+    'BTN_SOUTH': 0,
+    'BTN_EAST': 1,
+    'BTN_NORTH': 2,
+    'BTN_WEST': 3,
+    'BTN_TL': 4,
+    'BTN_TR': 5,
+    'BTN_SELECT': 6,
+    'BTN_START': 7,
+    'BTN_MODE': 8,
+    'BTN_THUMBL': 9,
+    'BTN_THUMBR':10
+}
+
+XONE_VALUE_MAP = {
+    0: (-32768, 32767),
+    1: (-32768, 32767),
+    2: (0, 1023),
+    3: (-32768, 32767),
+    4: (-32768, -32767),
+    5: (0, 1023),
+    6: (-1, 1),
+    7: (-1, 1)
+}
+
 JOYSTICK_CODE_VALUE_MAP = {
+    'Microsoft X-Box 360 pad': (XINPUT_CODE_MAP, XINPUT_VALUE_MAP),
+    'Sony Computer Entertainment Wireless Controller': (PS4_CODE_MAP, PS4_VALUE_MAP),
     'Logitech Gamepad F710': (F710_CODE_MAP, F710_VALUE_MAP),
+    'Microsoft X-Box One pad': (XONE_CODE_MAP, XONE_VALUE_MAP)
 }
 
 class JoystickRos2(Node):
 
     def __init__(self):
         super().__init__('joystick_ros2')
-        
+
         # Node params
         # TODO : use rosparam
         self.deadzone = 0.05
@@ -82,7 +187,7 @@ class JoystickRos2(Node):
         self.joy.buttons = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         # Joy publisher
-        self.publisher_ = self.create_publisher(Joy, 'joy', 1)
+        self.publisher_ = self.create_publisher(Joy, 'joy', 10)
 
         # logic params
         self.last_event = None
