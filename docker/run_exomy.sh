@@ -63,7 +63,8 @@ fi
 docker run \
     -it \
     --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws/src \
-    -v ~/ExoMy_Software:/root/exomy_ws/src/exomy \
+    --privileged \
+    -v /dev/bus/usb/002:/dev/bus/usb/002 \
     -p 8000:8000 \
     -p 8080:8080 \
     -p 9090:9090 \
@@ -72,3 +73,6 @@ docker run \
     --name "${container_name}" \
     "${image_name}" \
     "${start_command}"
+
+
+# Bus 002 Device 019: ID 054c:05c4 Sony Corp. DualShock 4 [CUH-ZCT1x]

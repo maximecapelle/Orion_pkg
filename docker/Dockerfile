@@ -4,6 +4,8 @@ FROM ros:humble
 ENV TZ=Europe/Amsterdam
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN apt-get update && apt-get install kodi-peripheral-joystick -y
+
 # Basic tools
 # RUN apt-get update
 # RUN apt-get update && \
