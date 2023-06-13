@@ -27,7 +27,7 @@ ButtonNameConversion = ['A', 'B', 'X', 'Y', 'LB', 'RB', 'EMPTY', 'BACK', 'START'
 class Joystick_Command_Interpreter(Node):
     def __init__(self):
         super().__init__("Joystick_Interpreter_Node")
-        self.sub = self.create_subscription(Joy, "joy", self.subscriber_callback, 10)
+        self.sub = self.create_subscription(Joy, "ps4_controller", self.subscriber_callback, 10)
     
     def subscriber_callback(self, msg):
         '''

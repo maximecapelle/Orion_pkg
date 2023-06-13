@@ -197,6 +197,7 @@ class JoystickRos2(Node):
         current_time = modf(time.time())
         self.joy.header.stamp.sec = int(current_time[1])
         self.joy.header.stamp.nanosec = int(current_time[0] * 1000000000) & 0xffffffff
+        print(self.joy)
         self.publisher_.publish(self.joy)
         self.last_publish_time = time.time()
         #print(self.joy)

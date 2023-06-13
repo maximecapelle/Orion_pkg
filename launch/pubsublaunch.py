@@ -1,5 +1,7 @@
 import launch
 from launch_ros.actions import Node
+import sys
+sys.stdout.flush()
 
 def generate_launch_description():
     return launch.LaunchDescription([
@@ -23,6 +25,12 @@ def generate_launch_description():
             package='orion_pkg',
             executable='Joystick_sub.py',
             name='Joy_sub',
+            output= 'screen'
+        ),
+        Node(
+            package='orion_pkg',
+            executable='Ps4Read.py',
+            name='InputReader',
             output= 'screen'
         ),
     ])

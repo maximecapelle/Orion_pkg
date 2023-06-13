@@ -62,9 +62,10 @@ fi
 # Run docker container
 docker run \
     -it \
-    --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws/src \
+    --mount type=bind,source=/home/maxime/WS/orion_ws/src,target=/WS/orion_ws/src \
     --privileged \
-    -v /dev/bus/usb/002:/dev/bus/usb/002 \
+    -v /dev/bus/usb:/dev/bus/usb \
+    -v /mnt/usb:/mnt/usb \
     -p 8000:8000 \
     -p 8080:8080 \
     -p 9090:9090 \
@@ -76,3 +77,4 @@ docker run \
 
 
 # Bus 002 Device 019: ID 054c:05c4 Sony Corp. DualShock 4 [CUH-ZCT1x]
+# docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb -v /mnt/usb:/mnt/usb my_ros_container

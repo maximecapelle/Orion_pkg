@@ -4,16 +4,19 @@ FROM ros:humble
 ENV TZ=Europe/Amsterdam
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get install kodi-peripheral-joystick -y
+# Install necessary packages for USB device mounting
+RUN apt-get update && apt-get install -y \
+    usbutils \
+    udev \
+    python3-pip
 
-# Basic tools
-# RUN apt-get update
-# RUN apt-get update && \
-#     apt-get install vim nano git tmux wget curl python-pip net-tools iputils-ping  -y
+# Create a mount point for the USB device
+RUN mkdir /mnt/usb
+RUN pip install pygame
 
-# Install additional ros packages
-# RUN apt-get update && apt-get install ros-melodic-rosbridge-server ros-melodic-joy -y
-# RUN pip install adafruit-pca9685
+# Set up udev rules for USB device detection
+RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules
+
 
 # Add ros sourcing to bashrc
 RUN echo ". /opt/ros/humble/setup.bash" >> ~/.bashrc
