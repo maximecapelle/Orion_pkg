@@ -11,7 +11,10 @@ help_text="How to run this file from commandline:
         sudo - is needed to give all permissions from the command line.
         sh   - to run the file as a bash file
         "$0" - the name of the start file in the docker folder,
-        [TYPE] - will be -(run type), currently only have -c
+        [TYPE] - will be -(run type), currently only have -c, -l
+        -c :config
+        -l :launch
+    
 "
 
 ######################################################## MAIN #########################################################
@@ -27,6 +30,11 @@ if [ "$1" != "" ]; then
         -c | --config)          
                                 container_name="${container_name_ancestor}_config"     # Edits the container name to differentiate between the different run types
                                 start_command="config"                                 # Define the start command that is needed in when docker run is called.
+                                options="--rm"                                         # Removes the docker container when closing the docker.
+                                ;;
+        -l | --launch)          
+                                container_name="${container_name_ancestor}_launch"     # Edits the container name to differentiate between the different run types
+                                start_command="launch"                                 # Define the start command that is needed in when docker run is called.
                                 options="--rm"                                         # Removes the docker container when closing the docker.
                                 ;;
 

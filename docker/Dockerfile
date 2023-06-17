@@ -8,15 +8,15 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
-    python3-pip
+    python3-pip 
 
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
 RUN pip install pygame
 
-# Set up udev rules for USB device detection
-RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules
 
+# Set up udev rules for USB device detection #054c:05c4 is for PS4 controller
+RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules 
 
 # Add ros sourcing to bashrc
 RUN echo ". /opt/ros/humble/setup.bash" >> ~/.bashrc
