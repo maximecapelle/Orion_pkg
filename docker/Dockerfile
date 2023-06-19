@@ -9,13 +9,15 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
     python3-pip
+    # python3-picamera-1.13
 
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
 RUN pip install pygame
+RUN pip install picamera
 
 # Set up udev rules for USB device detection
-RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules
+RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c21f", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules
 
 
 # Add ros sourcing to bashrc

@@ -62,10 +62,12 @@ fi
 # Run docker container
 docker run \
     -it \
-    --mount type=bind,source=/home/maxime/WS/orion_ws/src,target=/WS/orion_ws/src \
+    --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws/src \
     --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v /mnt/usb:/mnt/usb \
+    -v /opt/vc:/opt/vc \
+    --env LD_LIBRARY_PATH=/opt/vc/lib \
     -p 8000:8000 \
     -p 8080:8080 \
     -p 9090:9090 \
