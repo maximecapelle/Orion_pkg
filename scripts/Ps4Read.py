@@ -31,7 +31,6 @@ class PS4ControllerNode(Node):
         joy_msg.header.stamp = self.get_clock().now().to_msg()
         joy_msg.axes = axes
         joy_msg.buttons = buttons
-        print(joy_msg)
         self.publisher_.publish(joy_msg)
 
 def main(args=None):

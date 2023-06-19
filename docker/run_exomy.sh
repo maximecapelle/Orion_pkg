@@ -1,45 +1,45 @@
 #!/bin/bash
-# run_exomy- A script to run containers for dedicated functions of exomy
 
-help_text="Usage: "$0" [MODE] [OPTIONS]
-    A script to run ExoMy in different configurations
-    Options:
-        -c, --config    Only have Config at the moment while testing. 
+# This file is the file that will build the image and run the containers automatically. 
+
+######################################################## HELP MESSAGES #########################################################
+
+# If the command is run incorrecly ($0 is a special variable that stores the name as a variable)
+help_text="How to run this file from commandline:
+        Type: sudo sh "$0" [TYPE]
+    
+        sudo - is needed to give all permissions from the command line.
+        sh   - to run the file as a bash file
+        "$0" - the name of the start file in the docker folder,
+        [TYPE] - will be -(run type), currently only have -c, -l
+        -c :config
+        -l :launch
+    
 "
 
+######################################################## MAIN #########################################################
 ### Main
 # Initialize parameters 
-container_name="orion"
+container_name_ancestor="orion"
 image_name="orion"
+username="$USER" 
 
 # Process parameters
 if [ "$1" != "" ]; then
     case $1 in
-        # -a | --autostart)       
-        #                         container_name="${container_name}_autostart"
-        #                         start_command="autostart"
-        #                         options="--restart always"
-                                 
-        #                         ;;
-        # -s | --stop_autostart)  
-        #                         docker container stop "${container_name}_autostart"
-        #                         exit     
-        #                         ;;
         -c | --config)          
-                                container_name="${container_name}_config"
-                                start_command="config"
-                                options="--rm"
+                                container_name="${container_name_ancestor}_config"     # Edits the container name to differentiate between the different run types
+                                start_command="config"                                 # Define the start command that is needed in when docker run is called.
+                                options="--rm"                                         # Removes the docker container when closing the docker.
                                 ;;
-        # -d | --devel)           
-        #                         container_name="${container_name}_devel"
-        #                         start_command="devel"
-        #                         options="--restart always"
-        #                         ;;  
-        # -h | --help )           echo "$help_text"
-        #                         exit
-        #                         ;;
-        * )                     echo "ERROR: Not a valid mode!"
-                                echo "$help_text"
+        -l | --launch)          
+                                container_name="${container_name_ancestor}_launch"     # Edits the container name to differentiate between the different run types
+                                start_command="launch"                                 # Define the start command that is needed in when docker run is called.
+                                options="--rm"                                         # Removes the docker container when closing the docker.
+                                ;;
+
+        * )                     echo "ERROR: Not a valid mode!"             # If anything else but what is listed here, throw this error message.
+                                echo "$help_text"                           # *) means anything else I think
                                 exit 1
     esac
 else
@@ -48,21 +48,31 @@ else
     exit
 fi
 
+######################################################## BUILD IMAGE #########################################################
+
 # Build docker image from Dockerfile in directory 
-directory=$( dirname "$0" )
-docker build -t $image_name $directory
+directory=$( dirname "$0" )                         # dirname "..." gives the file path to this file. Is needed so that you can give context to where you are building this Dockerfile from.                            
+docker build -t $image_name $directory              # docker build - makes all the image from which all the containers from
+                                                    # -t is the tag command, where you overwrite the standard ID name and give it your own name. 
+                                                    # $image_name - gives it the name you specified
+                                                    # $directory - gives context to docker to where we are running the dockerfile from.
 
 # Stop any of the 3 containers if running
-RUNNING_CONTAINERS=$( docker container ls -a -q --filter ancestor=exomy )
-if [ -n "$RUNNING_CONTAINERS" ]; then
-    docker stop "$RUNNING_CONTAINERS"
-    docker rm -f "$RUNNING_CONTAINERS"
-fi
+RUNNING_CONTAINERS=$( docker container ls -a -q --filter ancestor=$container_name_ancestor) # Filters and saves all the containers that are running with the name of container.
+if [ -n "$RUNNING_CONTAINERS" ]; then                                                       # For each container:
+    docker stop "$RUNNING_CONTAINERS"                                                       # stops the container from running
+    docker rm -f "$RUNNING_CONTAINERS"                                                      # removes the container, -f does this forcefully
+fi 
+
+######################################################## RUN CONTAINER FROM IMAGE #########################################################
+#Define where the package can be found and where it needs to go
+source_hostmachine="/home/$username/WS/orion_ws/src"    # Define the location of the package on hostmachine
+target_docker_container="/WS/orion_ws/src"              # Define where to place the package in docker container 
 
 # Run docker container
 docker run \
     -it \
-    --mount type=bind,source=/home/maxcap/WS/orion_ws/src,target=/WS/orion_ws/src \
+    --mount type=bind,source=$source_hostmachine,target=$target_docker_container\
     --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v /mnt/usb:/mnt/usb \
@@ -71,12 +81,17 @@ docker run \
     -p 8000:8000 \
     -p 8080:8080 \
     -p 9090:9090 \
-    --privileged \
-    ${options} \
     --name "${container_name}" \
+    "${options}" \
     "${image_name}" \
-    "${start_command}"
+    "${start_command}" \
 
-
-# Bus 002 Device 019: ID 054c:05c4 Sony Corp. DualShock 4 [CUH-ZCT1x]
-# docker run -it --privileged -v /dev/bus/usb:/dev/bus/usb -v /mnt/usb:/mnt/usb my_ros_container
+# -it: Open with interative command line in container
+# --mount: the folders from host to docker container
+# --privileged: Give full access to host machine (Can be unsafe when public)
+# -v: Give access to all USB devices
+# -v: Also putting the usb devices on the docker container "-volumes"
+# -p: Open netork ports?
+# "${options}": Runs the extra options specified with run type.
+# "${image_name}": Define the name of image from which the container based on.
+# "${start_command}": Run defined start command  
