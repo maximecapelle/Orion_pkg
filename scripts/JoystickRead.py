@@ -3,12 +3,16 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
 import pygame
+from scripts import Init_Parameters as IP
+
+
+
 
 class PS4ControllerNode(Node):
     def __init__(self):
         super().__init__('ps4_controller_node')
-        self.publisher_ = self.create_publisher(Joy, 'ps4_controller', 10)
-        self.timer_ = self.create_timer(0.1, self.publish_controller_inputs)
+        self.publisher_ = self.create_publisher(Joy, IP.JS_TopicName, IP.qos_profile)
+        self.timer_ = self.create_timer(IP.JS_PublishRate, self.publish_controller_inputs)
 
         # Initialize pygame and the controller
         pygame.init()

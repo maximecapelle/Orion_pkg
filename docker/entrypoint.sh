@@ -12,7 +12,7 @@ if [[ $1 == "launch" ]]; then
 	source /opt/ros/humble/setup.bash
 	colcon build
 	source install/setup.bash
-	exec ros2 launch orion_pkg pubsublaunch.py
+	exec ros2 launch orion_pkg launch.py
 fi
 
 

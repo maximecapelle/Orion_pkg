@@ -22,7 +22,7 @@ help_text="How to run this file from commandline:
 # Initialize parameters 
 container_name_ancestor="orion"
 image_name="orion"
-username="$USER" 
+username="maxcap" 
 
 # Process parameters
 if [ "$1" != "" ]; then
@@ -76,6 +76,7 @@ docker run \
     --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v /mnt/usb:/mnt/usb \
+    -v /dev/video0:/dev/video0 \
     -v /opt/vc:/opt/vc \
     --env LD_LIBRARY_PATH=/opt/vc/lib \
     -p 8000:8000 \

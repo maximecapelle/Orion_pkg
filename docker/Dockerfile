@@ -1,5 +1,5 @@
 # Base image
-FROM ros:humble
+FROM arm64v8/ros:humble
 
 ENV TZ=Europe/Amsterdam
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -8,13 +8,17 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
-    python3-pip 
-    # python3-picamera-1.13
+    python3-pip \
+    python3-opencv \
+    libraspberrypi-dev
 
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
 RUN pip install pygame
 RUN pip install picamera
+RUN pip3 install picamera[array]
+RUN pip install opencv-python
+RUN pip install RPi.GPIO
 
 # Set up udev rules for USB device detection
 RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules

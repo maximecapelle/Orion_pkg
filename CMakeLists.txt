@@ -20,7 +20,9 @@ install(PROGRAMS
   scripts/joystick/joystick_commands.py
   scripts/joystick/inputs.py
   scripts/Joystick_sub.py
-  scripts/Ps4Read.py
+  scripts/JoystickRead.py
+  scripts/UltrasonicSensorReadings.py
+  scripts/UltrasonicSensorSub.py
   DESTINATION lib/${PROJECT_NAME}
 )
 # uncomment the following section in order to fill in
