@@ -1,11 +1,18 @@
 #!/bin/bash
-if [[ $1 == "config" ]]
-then
+if [[ $1 == "config" ]]; then
 	cd /WS/orion_ws/
-	# colcon build
-	# source install/setup.bash
-	# ros2 launch orion_pkg pubsublaunch.py
+	source /opt/ros/humble/setup.bash
+	colcon build
+	source install/setup.bash
 	bash
+fi
+
+if [[ $1 == "launch" ]]; then
+	cd /WS/orion_ws/
+	source /opt/ros/humble/setup.bash
+	colcon build
+	source install/setup.bash
+	exec ros2 launch orion_pkg launch.py
 fi
 
 

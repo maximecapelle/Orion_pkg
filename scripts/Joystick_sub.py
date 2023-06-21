@@ -4,6 +4,7 @@ import numpy as np
 from rclpy.node import Node
 from std_msgs.msg import String
 from sensor_msgs.msg import Joy
+from scripts import Init_Parameters as IP
 
 # Logitech Gamepad F710 Mapping
 F710_BUTTON_MAP = {
@@ -21,13 +22,12 @@ F710_BUTTON_MAP = {
     'R3': 11
 }
 
-#Button position in array
-ButtonNameConversion = ['A', 'B', 'X', 'Y', 'LB', 'RB', 'EMPTY', 'BACK', 'START', 'HOME', 'L3', 'R3']
+
 
 class Joystick_Command_Interpreter(Node):
     def __init__(self):
         super().__init__("Joystick_Interpreter_Node")
-        self.sub = self.create_subscription(Joy, "joy", self.subscriber_callback, 10)
+        self.sub = self.create_subscription(Joy, IP.JS_TopicName, self.subscriber_callback, IP.qos_profile)
     
     def subscriber_callback(self, msg):
         '''
@@ -59,11 +59,9 @@ class Joystick_Command_Interpreter(Node):
             idxs = np.asarray(np.where(button_array == 1))
             text = ""
             for idx in idxs[0]:
-                text = text + f" {ButtonNameConversion[idx]} +"
+                text = text + f" {IP.JS_ButtonNameConversion[idx]} +"
             print(f"\n\n YOU PRESSED: {text[0:-2]}")
             
-
-
 
 def main(args=None):
 
