@@ -41,6 +41,12 @@ def generate_launch_description():
             name='USSubscriber',
             output= 'screen'
         ),
+        Node(
+            package='orion_pkg',
+            executable='OpenCVWebcamera.py',
+            name='CameraOpen',
+            output= 'screen'
+        ),
     ])
 
 if __name__ == '__main__':

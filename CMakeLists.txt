@@ -23,6 +23,7 @@ install(PROGRAMS
   scripts/JoystickRead.py
   scripts/UltrasonicSensorReadings.py
   scripts/UltrasonicSensorSub.py
+  scripts/OpenCVWebcamera.py
   DESTINATION lib/${PROJECT_NAME}
 )
 # uncomment the following section in order to fill in
