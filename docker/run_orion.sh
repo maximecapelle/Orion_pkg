@@ -76,7 +76,7 @@ docker run \
     --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     -v /mnt/usb:/mnt/usb \
-    -v /dev/video0:/dev/video0 \
+    -v /dev/media*:/dev/media* \
     -v /opt/vc:/opt/vc \
     --env LD_LIBRARY_PATH=/opt/vc/lib \
     -p 8000:8000 \

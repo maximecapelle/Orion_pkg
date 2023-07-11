@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 import time
 import numpy as np
 from scripts import Init_Parameters as IP
+from datetime import datetime
 
 class UltrasonicSensorPub(Node):
     def __init__(self):
@@ -65,16 +66,31 @@ class UltrasonicSensorPub(Node):
         
         if np.sum(button_array) >= 1:       #Checks if button was pressed
             idxs = np.asarray(np.where(button_array == 1)) #Gives indexs of buttons pressed
-            epoch = time.time()
+            
+            
 
             if 7 in idxs and self.US_start_flag == False: #If Start is pressed
                 
-                print(f"Start was pressed: {epoch}")
+                epoch = time.time()
+                # Convert timestamp to datetime object
+                datetime_obj = datetime.fromtimestamp(epoch)
+
+                # Format the datetime object as desired
+                formatted_datetime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+                
+                print(f"Start was pressed: {formatted_datetime}")
                 self.US_start_flag = True
         
             if 6 in idxs and self.US_start_flag == True:  #If Back is pressed
-        
-                print(f"Back was pressed: {epoch}")
+                
+                epoch = time.time()
+                # Convert timestamp to datetime object
+                datetime_obj = datetime.fromtimestamp(epoch)
+
+                # Format the datetime object as desired
+                formatted_datetime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+                
+                print(f"Back was pressed: {formatted_datetime}")
                 self.US_start_flag = False
             
         return self.US_start_flag
@@ -110,7 +126,8 @@ class UltrasonicSensorPub(Node):
             # multiply with the sonic speed (34300 cm/s)
             # and divide by 2, because there and back
             ranges[idx] = (TimeElapsed * 34300) / 2
-
+            
+        print(np.median(ranges))
     
         return np.median(ranges)  
 

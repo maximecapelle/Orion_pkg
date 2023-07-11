@@ -35,7 +35,7 @@ US_TopicName = 'UltraSonicSensor'   # [-]
 # Number of measurements medianed per node call of US Sensor
 US_measurement_array_size = 10      # [-]
 # Set US Sensor GPIO Pins
-US_GPIO_TRIGGER = 18                # [-]    
-US_GPIO_ECHO = 24                   # [-]
+US_GPIO_TRIGGER = 18               # [-]    
+US_GPIO_ECHO = 24                # [-]
 # Time step between US sensor triggering
 US_SampleFreq = 0.01                # [sec]

@@ -9,8 +9,14 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
     python3-pip \
-    python3-opencv \
-    libraspberrypi-dev
+    python3-prctl \
+    python3-opencv 
+
+# Install picamera module
+RUN pip3 install picamera
+RUN pip3 install picamera2
+
+###################################################################
 
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
