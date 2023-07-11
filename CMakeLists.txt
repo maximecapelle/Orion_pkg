@@ -17,12 +17,10 @@ ament_python_install_package(scripts)
 install(PROGRAMS
   scripts/templates/publisher.py
   scripts/templates/subscriber.py
-  scripts/joystick/joystick_commands.py
-  scripts/joystick/inputs.py
-  scripts/Joystick_sub.py
-  scripts/JoystickRead.py
-  scripts/UltrasonicSensorReadings.py
-  scripts/UltrasonicSensorSub.py
+  scripts/Joystick/Joystick_sub.py
+  scripts/Joystick/Joystick_pub.py
+  scripts/UltrasonicSensor/UltrasonicSensor_pub.py
+  scripts/UltrasonicSensor/UltrasonicSensor_sub.py
   scripts/OpenCVWebcamera.py
   DESTINATION lib/${PROJECT_NAME}
 )

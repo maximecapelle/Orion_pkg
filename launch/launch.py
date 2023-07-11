@@ -25,19 +25,19 @@ def generate_launch_description():
         ),
         Node(
             package='orion_pkg',
-            executable='JoystickRead.py',
+            executable='Joystick_pub.py',
             name='InputReader',
             output= 'screen'
         ),
         Node(
             package='orion_pkg',
-            executable='UltrasonicSensorReadings.py',
+            executable='UltrasonicSensor_pub.py',
             name='USPublisher',
             output= 'screen'
         ),
         Node(
             package='orion_pkg',
-            executable='UltrasonicSensorSub.py',
+            executable='UltrasonicSensor_sub.py',
             name='USSubscriber',
             output= 'screen'
         ),

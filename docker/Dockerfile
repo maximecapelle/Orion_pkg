@@ -1,5 +1,5 @@
 # Base image
-FROM arm64v8/ros:humble
+FROM ros:humble
 
 ENV TZ=Europe/Amsterdam
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -12,17 +12,11 @@ RUN apt-get update && apt-get install -y \
     python3-prctl \
     python3-opencv 
 
-# Install picamera module
-RUN pip3 install picamera
-RUN pip3 install picamera2
-
 ###################################################################
 
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
 RUN pip install pygame
-RUN pip install picamera
-RUN pip3 install picamera[array]
 RUN pip install opencv-python
 RUN pip install RPi.GPIO
 

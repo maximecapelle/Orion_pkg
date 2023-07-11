@@ -22,7 +22,16 @@ help_text="How to run this file from commandline:
 # Initialize parameters 
 container_name_ancestor="orion"
 image_name="orion"
-username="maxcap" 
+
+# Set the flag
+RASPI_HOST= false
+
+# Check the flag using an if statement
+if [ "$RASPI_HOST" = true ]; then
+    username="maxcap"
+else
+    username="maxime"
+fi
 
 # Process parameters
 if [ "$1" != "" ]; then
