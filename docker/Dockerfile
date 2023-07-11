@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
 # Create a mount point for the USB device
 RUN mkdir /mnt/usb
 RUN pip install pygame
-RUN pip install opencv-python
+RUN pip install opencv-contrib-python==4.6.0.66
 RUN pip install RPi.GPIO
 
 # Set up udev rules for USB device detection
