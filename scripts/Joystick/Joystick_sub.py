@@ -30,27 +30,6 @@ class Joystick_Command_Interpreter(Node):
         self.sub = self.create_subscription(Joy, IP.JS_TopicName, self.subscriber_callback, IP.qos_profile)
     
     def subscriber_callback(self, msg):
-        '''
-        Formats the Joystick input: Axes, Buttons. 
-
-        Prints the buttons that you pressed in letter format. 
-        Will be used to check the history of inputs.
-
-        Args:
-
-            msg:
-                The "sensor_msgs.msg.Joy" input which is split into:
-                    Header header           # timestamp in the header is the time the data is received from the joystick
-                    float32[] axes          # the axes measurements from a joystick
-                    int32[] buttons         # the buttons measurements from a joystick 
-        
-        Returns:
-            None
-
-        Prints:
-            "YOU PRESSED: {LETTER BUTTON NAME}"
-        '''
-        
         #Convert msg into numpy array
         button_array = np.array(msg.buttons)
 
@@ -64,16 +43,17 @@ class Joystick_Command_Interpreter(Node):
             
 
 def main(args=None):
+    
+    if IP.EnableJoystick or IP.EnableAll:
+        rclpy.init()
+        JoystickReader = Joystick_Command_Interpreter()
+        print(f"\nSubscriber Initialized, waiting for data publication.")
 
-    rclpy.init()
-    JoystickReader = Joystick_Command_Interpreter()
-    print(f"\nSubscriber Initialized, waiting for data publication.")
-
-    try: 
-        rclpy.spin(JoystickReader)
-    except KeyboardInterrupt:
-        print("Terminating Node")
-        JoystickReader.destroy_node()
+        try: 
+            rclpy.spin(JoystickReader)
+        except KeyboardInterrupt:
+            print("Terminating Node")
+            JoystickReader.destroy_node()
 
 if __name__ == '__main__':    #This means that this file can be run as a script but isnt actually redefined in the other file.
     main()

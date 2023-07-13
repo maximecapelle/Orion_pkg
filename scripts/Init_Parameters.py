@@ -7,6 +7,13 @@
 # Queue size for unstable connections
 qos_profile = 10                    # [-]
 
+#Activation of compontents
+EnableCamera =      False
+EnableUS =          False
+EnableJoystick =    False
+EnableLCD =         False
+EnableMotors =      False
+EnableAll =         False
 
 ###############################
 ## Joystick

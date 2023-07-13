@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
     python3-pip \
-    python3-prctl \
     python3-opencv 
 
 ###################################################################

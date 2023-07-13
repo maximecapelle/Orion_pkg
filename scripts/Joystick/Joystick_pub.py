@@ -8,9 +8,9 @@ from scripts import Init_Parameters as IP
 
 
 
-class PS4ControllerNode(Node):
+class JoystickPubNode(Node):
     def __init__(self):
-        super().__init__('ps4_controller_node')
+        super().__init__('JoystickPubNode')
         self.publisher_ = self.create_publisher(Joy, IP.JS_TopicName, IP.qos_profile)
         self.timer_ = self.create_timer(IP.JS_PublishRate, self.publish_controller_inputs)
 
@@ -38,10 +38,11 @@ class PS4ControllerNode(Node):
         self.publisher_.publish(joy_msg)
 
 def main(args=None):
-    rclpy.init(args=args)
-    node = PS4ControllerNode()
-    rclpy.spin(node)
-    rclpy.shutdown()
+    if IP.EnableJoystick or IP.EnableAll:
+        rclpy.init(args=args)
+        node = JoystickPubNode()
+        rclpy.spin(node)
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

@@ -39,27 +39,7 @@ class UltrasonicSensorPub(Node):
             self.pub.publish(msg)                                   	                                # publishing the msg on the created publisher
     
     def subscriber_callback(self, msg):
-        '''
-        Formats the Joystick input: Axes, Buttons. 
-
-        Prints the buttons that you pressed in letter format. 
-        Will be used to check the history of inputs.
-
-        Args:
-
-            msg:
-                The "sensor_msgs.msg.Joy" input which is split into:
-                    Header header           # timestamp in the header is the time the data is received from the joystick
-                    float32[] axes          # the axes measurements from a joystick
-                    int32[] buttons         # the buttons measurements from a joystick 
-        
-        Returns:
-            None
-
-        Prints:
-            "YOU PRESSED: {LETTER BUTTON NAME}"
-        '''
-        
+    
         #Convert msg into numpy array
         button_array = np.array(msg.buttons)
 
@@ -133,15 +113,17 @@ class UltrasonicSensorPub(Node):
 
 
 def main(args=None):
-    rclpy.init()
-    my_pub = UltrasonicSensorPub()
-    print("UltrasonicSensor node is running...")
+    
+    if IP.EnableUS or IP.EnableAll:
+        rclpy.init()
+        my_pub = UltrasonicSensorPub()
+        print("UltrasonicSensor node is running...")
 
-    try: 
-        rclpy.spin(my_pub)
-    except KeyboardInterrupt:
-        print("Terminating Node")
-        my_pub.destroy_node()
+        try: 
+            rclpy.spin(my_pub)
+        except KeyboardInterrupt:
+            print("Terminating Node")
+            my_pub.destroy_node()
 
 
 if __name__ == '__main__':    #This means that this file can be run as a script but isnt actually redefined in the other file.
