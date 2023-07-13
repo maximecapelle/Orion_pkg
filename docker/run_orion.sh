@@ -24,11 +24,11 @@ container_name_ancestor="orion"
 image_name="orion"
 
 # Set the flag
-RASPI_HOST=false
+RASPI_HOST=true
 
 # Check the flag using an if statement
 if [ "$RASPI_HOST" = true ]; then
-    username="maxcap"
+    username=$(hostname)
 else
     username="maxime"
 fi
@@ -78,8 +78,6 @@ fi
 source_hostmachine="/home/$username/WS/orion_ws/src"    # Define the location of the package on hostmachine
 target_docker_container="/WS/orion_ws/src"             # Define where to place the package in docker container
 xauthority_path=$XAUTHORITY
-echo "Username: '$USER'"
-
 
 # Run docker container
 docker run \
