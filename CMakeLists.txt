@@ -21,7 +21,7 @@ install(PROGRAMS
   scripts/Joystick/Joystick_pub.py
   scripts/UltrasonicSensor/UltrasonicSensor_pub.py
   scripts/UltrasonicSensor/UltrasonicSensor_sub.py
-  scripts/OpenCVWebcamera.py
+  scripts/Camera/OpenCVWebcamera.py
   DESTINATION lib/${PROJECT_NAME}
 )
 # uncomment the following section in order to fill in

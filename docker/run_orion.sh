@@ -87,6 +87,8 @@ docker run \
     -v /mnt/usb:/mnt/usb \
     -v /dev/media*:/dev/media* \
     -v /opt/vc:/opt/vc \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
     --env LD_LIBRARY_PATH=/opt/vc/lib \
     -p 8000:8000 \
     -p 8080:8080 \

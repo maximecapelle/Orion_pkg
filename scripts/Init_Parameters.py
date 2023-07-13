@@ -15,6 +15,23 @@ EnableLCD =         False
 EnableMotors =      False
 EnableAll =         False
 
+
+
+
+###############################
+## Camera
+###############################
+
+#Video Channel for reaching USB camera
+USBChannel = 0
+CAM_PublishRate = 0.0333 #Roughly 30fps
+CAM_TopicName = "CameraFeed"
+CAM_ImageHeight = 480
+CAM_ImageWidth = 640
+
+
+
+
 ###############################
 ## Joystick
 ###############################
@@ -29,6 +46,8 @@ JS_ButtonNameConversion = ['A', 'B', 'X', 'Y', 'LB', 'RB', 'BACK', 'START', 'HOM
 JS_TopicName = "joystick_inputs"    # [-]
 # Time step per node call of joystick inputs
 JS_PublishRate = 0.1                # [sec]
+
+
 
 
 ###############################
