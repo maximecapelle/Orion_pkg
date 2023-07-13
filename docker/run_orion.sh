@@ -24,7 +24,7 @@ container_name_ancestor="orion"
 image_name="orion"
 
 # Set the flag
-RASPI_HOST=true
+RASPI_HOST=false
 
 # Check the flag using an if statement
 if [ "$RASPI_HOST" = true ]; then
@@ -76,7 +76,10 @@ fi
 ######################################################## RUN CONTAINER FROM IMAGE #########################################################
 #Define where the package can be found and where it needs to go
 source_hostmachine="/home/$username/WS/orion_ws/src"    # Define the location of the package on hostmachine
-target_docker_container="/WS/orion_ws/src"              # Define where to place the package in docker container 
+target_docker_container="/WS/orion_ws/src"             # Define where to place the package in docker container
+xauthority_path=$XAUTHORITY
+echo "Username: '$USER'"
+
 
 # Run docker container
 docker run \
@@ -94,6 +97,11 @@ docker run \
     -p 8080:8080 \
     -p 9090:9090 \
     --name "${container_name}" \
+    -v $xauthority_path:/root/.Xauthority \
+    -e XAUTHORITY=/root/.Xauthority \
+    -e QT_X11_NO_MITSHM=1 \
+    -e X11_FORWARDING=yes \
+    --net=host \
     "${options}" \
     "${image_name}" \
     "${start_command}" \

@@ -9,7 +9,10 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     udev \
     python3-pip \
-    python3-opencv 
+    python3-opencv \
+    libsm6 \
+    libxrender1 \
+    libfontconfig1
 
 ###################################################################
 
