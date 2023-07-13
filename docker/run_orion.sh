@@ -24,13 +24,13 @@ container_name_ancestor="orion"
 image_name="orion"
 
 # Set the flag
-RASPI_HOST=true
+RASPI_HOST=false
 
 # Check the flag using an if statement
 if [ "$RASPI_HOST" = true ]; then
     username=$(hostname)
 else
-    username="maxime"
+    username="$USER"
 fi
 
 # Process parameters
