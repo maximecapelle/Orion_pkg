@@ -24,10 +24,10 @@ EnableAll =         False
 
 #Video Channel for reaching USB camera
 USBChannel = 0
-CAM_PublishRate = 0.0333 #Roughly 30fps
+CAM_PublishRate = 0.0333  # [sec] Roughly 30fps
 CAM_TopicName = "CameraFeed"
-CAM_ImageHeight = 480
-CAM_ImageWidth = 640
+CAM_ImageHeight = None
+CAM_ImageWidth = None
 
 
 
