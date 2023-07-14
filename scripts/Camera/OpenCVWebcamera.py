@@ -1,55 +1,36 @@
 #!/usr/bin/env python3
 
-
 import cv2
 
-import os
+def main():
+    # Create a VideoCapture object to access the webcam
+    cap = cv2.VideoCapture(0)
 
-# current_file_directory = os.path.dirname(os.path.abspath(__file__))
-# image_path = os.path.join(current_file_directory, 'TestImage.jpg')
-# print("Image path:", image_path)
+    # Check if the webcam is opened successfully
+    if not cap.isOpened():
+        print("Failed to open webcam")
+        return
 
-# image_path = '/WS/orion_ws/src/orion_pkg/scripts/Camera'
+    while True:
+        # Read a frame from the webcam
+        ret, frame = cap.read()
 
-# Load image
-img = cv2.imread("TestImage.jpg")
+        # If the frame was not captured successfully, break the loop
+        if not ret:
+            print("Failed to capture frame")
+            break
 
-if img is not None:
-    print("Image size:", img.shape)
-    cv2.imshow('TestImage', img)
-    cv2.waitKey(0)
+        # Display the frame in a window named 'Webcam'
+        cv2.imshow('Webcam', frame)
+
+        # Wait for the 'q' key to be pressed to exit the loop
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+    # Release the VideoCapture object and close all windows
+    cap.release()
     cv2.destroyAllWindows()
-else:
-    print("Error: Failed to load the image")
 
-# import cv2
+if __name__ == '__main__':
+    main()
 
-
-# # define a video capture object
-# # vid = cv2.VideoCapture(0)
-
-# img = cv2.imread('TestImage.jpg')
-
-# cv2.imshow('TestImage', img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-
-# while(True):
-	
-# 	# Capture the video frame
-# 	# by frame
-# 	ret, frame = vid.read()
-
-# 	# Display the resulting frame
-# 	cv2.imshow('frame', frame)
-	
-# 	# the 'q' button is set as the
-# 	# quitting button you may use any
-# 	# desired button of your choice
-# 	if cv2.waitKey(1) & 0xFF == ord('q'):
-# 		break
-
-# # After the loop release the cap object
-# vid.release()
-# # Destroy all the windows
-# cv2.destroyAllWindows()
