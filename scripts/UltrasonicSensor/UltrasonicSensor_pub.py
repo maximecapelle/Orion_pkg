@@ -43,33 +43,23 @@ class UltrasonicSensorPub(Node):
         #Convert msg into numpy array
         button_array = np.array(msg.buttons)
 
+        #If Button is pressed
+        if np.sum(button_array) >= 1:
+
+            #Converts inputs to Idxs
+            idxs = np.asarray(np.where(button_array == 1))
         
-        if np.sum(button_array) >= 1:       #Checks if button was pressed
-            idxs = np.asarray(np.where(button_array == 1)) #Gives indexs of buttons pressed
-            
-            
+            #If Start is pressed
+            if IP.JS_BUTTON_MAP['START'] in idxs and self.US_start_flag == False: 
 
-            if 7 in idxs and self.US_start_flag == False: #If Start is pressed
-                
-                epoch = time.time()
-                # Convert timestamp to datetime object
-                datetime_obj = datetime.fromtimestamp(epoch)
-
-                # Format the datetime object as desired
-                formatted_datetime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
-                
+                formatted_datetime = self.CreateTimeStamp()
                 print(f"Start was pressed: {formatted_datetime}")
                 self.US_start_flag = True
-        
-            if 6 in idxs and self.US_start_flag == True:  #If Back is pressed
-                
-                epoch = time.time()
-                # Convert timestamp to datetime object
-                datetime_obj = datetime.fromtimestamp(epoch)
 
-                # Format the datetime object as desired
-                formatted_datetime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+            #If BACK is pressed 
+            if IP.JS_BUTTON_MAP['BACK'] in idxs and self.US_start_flag == True:
                 
+                formatted_datetime = self.CreateTimeStamp()
                 print(f"Back was pressed: {formatted_datetime}")
                 self.US_start_flag = False
             
@@ -83,33 +73,44 @@ class UltrasonicSensorPub(Node):
 
         for idx in range(NumReadings):
 
-            # set Trigger to HIGH
+            # Activate Signal
             GPIO.output(GPIO_TRIGGER, True)
 
-            # set Trigger after 0.01ms to LOW
+            # Disable Signal
             time.sleep(US_SampleFreq)
             GPIO.output(GPIO_TRIGGER, False)
 
             StartTime = time.time()
             StopTime = time.time()
 
-            # save StartTime
+            # Save StartTime
             while GPIO.input(GPIO_ECHO) == 0:
                 StartTime = time.time()
             
-            # save time of arrival
+            # Save ArrivalTime
             while GPIO.input(GPIO_ECHO) == 1:
                 StopTime = time.time()
         
-            # time difference between start and arrival
+            # Calculates distance with time values
             TimeElapsed = StopTime - StartTime
-            # multiply with the sonic speed (34300 cm/s)
-            # and divide by 2, because there and back
             ranges[idx] = (TimeElapsed * 34300) / 2
-            
-        print(np.median(ranges))
-    
-        return np.median(ranges)  
+        
+        #Calculate Median
+        median_distance = np.median(ranges)    
+        print(f"Median Distane of {NumReadings} samples: {median_distance}")
+
+        return median_distance
+
+
+    def CreateTimeStamp(self):
+        epoch = time.time()
+        # Convert timestamp to datetime object
+        datetime_obj = datetime.fromtimestamp(epoch)
+
+        # Format the datetime object as desired
+        formatted_datetime = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+
+        return formatted_datetime 
 
 
 def main(args=None):
