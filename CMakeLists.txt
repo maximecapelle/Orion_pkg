@@ -21,12 +21,11 @@ install(PROGRAMS
   scripts/Joystick/Joystick_pub.py
   scripts/UltrasonicSensor/UltrasonicSensor_pub.py
   scripts/UltrasonicSensor/UltrasonicSensor_sub.py
-  scripts/Camera/OpenCVWebcamera.py
+  scripts/Camera/CameraDisplay.py
+  scripts/Camera/Camera_sub.py
   DESTINATION lib/${PROJECT_NAME}
 )
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

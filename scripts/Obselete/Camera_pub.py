@@ -4,31 +4,22 @@ import rclpy
 import cv2
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from scripts import Init_Parameters as IP 
+from scripts import Init_Parameters as IP
 
 class CameraImagePubNode(Node):
     def __init__(self):
         super().__init__('CameraImagePubNode')
-
-        self.vid = cv2.VideoCapture(0)
         self.pub = self.create_publisher(Image, IP.CAM_TopicName, qos_profile= IP.qos_profile)
-        self.timer = self.create_timer(IP.CAM_PublishRate, self.SendImage) 
-
-    def SendImage(self):
-        img = Image()
-        frame = self.FormatImage()
-        img.data = frame
-        self.pub.publish(img)
+        CameraFeed = self.FormatImage()
+    
 
     def FormatImage(self):
-        ret, frame = self.vid.read()
-
-        ## Add all the Aruco Marker stuff if you want
-
-        return frame
-
-
-
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            print(frame)
+            cv2.imshow("Webcamera", frame)
+        
 def main(args=None):
     if IP.EnableCamera or IP.EnableAll:
         rclpy.init()

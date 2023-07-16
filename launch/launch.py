@@ -29,24 +29,36 @@ def generate_launch_description():
             name='InputReader',
             output= 'screen'
         ),
+        # Node(
+        #     package='orion_pkg',
+        #     executable='UltrasonicSensor_pub.py',
+        #     name='USPublisher',
+        #     output= 'screen'
+        # ),
+        # Node(
+        #     package='orion_pkg',
+        #     executable='UltrasonicSensor_sub.py',
+        #     name='USSubscriber',
+        #     output= 'screen'
+        # ),
         Node(
             package='orion_pkg',
-            executable='UltrasonicSensor_pub.py',
-            name='USPublisher',
+            executable='CameraDisplay.py',
+            name='CameraDisplay',
             output= 'screen'
         ),
-        Node(
-            package='orion_pkg',
-            executable='UltrasonicSensor_sub.py',
-            name='USSubscriber',
-            output= 'screen'
-        ),
-        Node(
-            package='orion_pkg',
-            executable='OpenCVWebcamera.py',
-            name='CameraOpen',
-            output= 'screen'
-        ),
+        # Node(
+        #     package='orion_pkg',
+        #     executable='VideoStream.py',
+        #     name='VideoStream',
+        #     output= 'screen'
+        # ),
+        # Node(
+        #     package='orion_pkg',
+        #     executable='Camera_sub.py',
+        #     name='CameraDisplay',
+        #     output= 'screen'
+        # ),
     ])
 
 if __name__ == '__main__':

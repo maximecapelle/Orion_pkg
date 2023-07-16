@@ -8,9 +8,9 @@
 qos_profile = 10                    # [-]
 
 #Activation of compontents
-EnableCamera =      False
+EnableCamera =      True
 EnableUS =          False
-EnableJoystick =    False
+EnableJoystick =    True
 EnableLCD =         False
 EnableMotors =      False
 EnableAll =         False
@@ -23,11 +23,10 @@ EnableAll =         False
 ###############################
 
 #Video Channel for reaching USB camera
-USBChannel = 0
+VideoCapture = 0
 CAM_PublishRate = 0.0333  # [sec] Roughly 30fps
 CAM_TopicName = "CameraFeed"
-CAM_ImageHeight = None
-CAM_ImageWidth = None
+
 
 
 

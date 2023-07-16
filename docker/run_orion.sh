@@ -24,7 +24,7 @@ container_name_ancestor="orion"
 image_name="orion"
 
 # Set the flag
-RASPI_HOST=false
+RASPI_HOST=true
 
 # Check the flag using an if statement
 if [ "$RASPI_HOST" = true ]; then

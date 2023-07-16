@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import cv2
+from scripts import Init_Parameters as IP
+
+
 
 def main():
     # Create a VideoCapture object to access the webcam
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(IP.VideoCapture)
 
     # Check if the webcam is opened successfully
     if not cap.isOpened():
@@ -32,5 +35,5 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main()
-
+    if IP.EnableCamera or IP.EnableAll:
+        main()

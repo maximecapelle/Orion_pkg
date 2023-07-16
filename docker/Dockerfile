@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     libxrender1 \
     libfontconfig1
 
+RUN apt-get install ros-humble-vision-opencv -y
+
+
 ###################################################################
 
 # Create a mount point for the USB device
@@ -21,6 +24,7 @@ RUN mkdir /mnt/usb
 RUN pip install pygame
 RUN pip install opencv-contrib-python==4.6.0.66
 RUN pip install RPi.GPIO
+RUN pip install flask
 
 # Set up udev rules for USB device detection
 RUN echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="054c", ATTR{idProduct}=="05c4", MODE="0666"' >> /etc/udev/rules.d/99-usb.rules

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import cv2
 from flask import Flask, Response
 
@@ -9,7 +11,7 @@ def generate_frames():
     video_source = 0  # Replace with the appropriate video source (e.g., file path or camera index)
 
     # Initialize the VideoCapture object
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(video_source)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -31,4 +33,4 @@ def stream_video():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8765)
+    app.run(host='0.0.0.0', port=8000)
