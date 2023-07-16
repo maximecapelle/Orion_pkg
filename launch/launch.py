@@ -5,18 +5,6 @@ import sys
 
 def generate_launch_description():
     return launch.LaunchDescription([
-        # Node(
-        #     package='orion_pkg',
-        #     executable='publisher.py',
-        #     output = 'screen',
-        #     name='pub'),
-        # Node(
-        #     package='orion_pkg',
-        #     executable='subscriber.py',
-        #     name='sub',
-        #     output= 'screen'
-        # ),
-        
         Node(
             package='orion_pkg',
             executable='Joystick_sub.py',
